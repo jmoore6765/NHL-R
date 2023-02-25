@@ -25,7 +25,7 @@ xgPerGame |>
   geom_vline(xintercept = mean(xgPerGame$xg_pergame), linetype = "dashed") +
   labs(x = "Expected Goals per Game",
        y = "Goals Over Expected Goals per Game",
-       title = "Goals Over Expected and xG",
+       title = "Goals Over Expected and Expected Goals",
        subtitle = "Minimum of 30 goals") +
   scale_x_continuous(breaks = scales::pretty_breaks(n = 5)) +
   scale_y_continuous(breaks = scales::pretty_breaks(n = 5)) +
