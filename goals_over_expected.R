@@ -26,7 +26,7 @@ goals_over_expected |>
   labs(x = "Expected Goals",
        y = "Goals Over Expected Goals",
        title = "Goals Over Expected and Expected Goals",
-       subtitle = "Minimum of 30 goals") +
+       subtitle = "Minimum 30 goals") +
   scale_x_continuous(breaks = scales::pretty_breaks(n = 5)) +
   scale_y_continuous(breaks = scales::pretty_breaks(n = 5)) +
   theme(plot.title = element_text(size = 22, hjust = 0.5, face = "bold"),
