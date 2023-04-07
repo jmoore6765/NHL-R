@@ -42,7 +42,7 @@ goals_over_expected |>
   mutate(ixg = round(ixg, 1), 
          gax = round(gax, 1)) |> 
   gt() |> 
-  tab_row_group(group = "", rows = 1:nrow(goals_over_expected)) |> 
+  tab_row_group(label = "", rows = 1:nrow(goals_over_expected)) |> 
   cols_align(align = "center") |> 
   gtExtras::gt_img_rows(team_logo_espn) |> 
   cols_label(gax_rank = "Rank",
