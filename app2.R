@@ -6,7 +6,7 @@ library(gtExtras)
 library(ggplot2)
 
 # Define UI
-ui <- fluidPage(
+ui = fluidPage(
   sliderInput(inputId = "date_range", 
               label = "Select date range:",
               min = 2021, max = 2023, value = c(2021, 2023), step = 1, sep = ""),
@@ -15,16 +15,16 @@ ui <- fluidPage(
 )
 
 # Define server
-server <- function(input, output) {
+server = function(input, output) {
   
   # Filter data based on date range selected by user
-  pbp_filtered <- reactive({
+  pbp_filtered = reactive({
     pbp_full |> 
       filter(season >= input$date_range[1] & season <= input$date_range[2])
   })
   
   # Calculate individual statistics
-  goe <- reactive({
+  goe = reactive({
     calculate_individual(pbp_filtered(), type = "R", game_strength = "all") |> 
       group_by(player_id) |> 
       filter(goals >= (input$date_range[2] - input$date_range[1]) * 10) |> 
@@ -33,7 +33,7 @@ server <- function(input, output) {
              team_color1, team_color2) 
   })
   
-  output$scatter_plot <- renderPlot({
+  output$scatter_plot = renderPlot({
     goe() |>
       na.omit() |>
       ggplot(aes(x = ixg, y = gax)) +
@@ -54,7 +54,7 @@ server <- function(input, output) {
             plot.subtitle = element_text(size = 16, hjust = 0.5))
   })
   
-  output$table <- render_gt({
+  output$table = render_gt({
     goe() |>
       cbind(gax_rank = rank(-goe()$gax)) |>
       arrange(gax_rank) |>
