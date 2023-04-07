@@ -1,7 +1,7 @@
 library(hockeyR)
 library(tidyverse)
 
-pbp_full = hockeyR::load_pbp(2023:2023)
+pbp_full = hockeyR::load_pbp(2021:2023)
 
 goe_filtered = calculate_individual(pbp_full, type = "R", game_strength = "all") |>
   group_by(player_id) |> 
