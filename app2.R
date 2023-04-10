@@ -5,11 +5,13 @@ library(gt)
 library(gtExtras)
 library(ggplot2)
 
+pbp_full = hockeyR::load_pbp(2015:2023)
+
 # Define UI
 ui = fluidPage(
   sliderInput(inputId = "date_range", 
-              label = "Select date range:",
-              min = 2021, max = 2023, value = c(2021, 2023), step = 1, sep = ""),
+              label = "Date Range",
+              min = 2015, max = 2023, value = c(2021, 2022), step = 1, sep = ""),
   plotOutput(outputId = "scatter_plot"),
   gt_output(outputId = "table")
 )
@@ -27,7 +29,7 @@ server = function(input, output) {
   goe = reactive({
     calculate_individual(pbp_filtered(), type = "R", game_strength = "all") |> 
       group_by(player_id) |> 
-      filter(goals >= (input$date_range[2] - input$date_range[1]) * 10) |> 
+      filter(goals >= (input$date_range[2] - input$date_range[1]) * 30) |> 
       left_join(team_logos_colors, by = c("team" = "full_team_name")) |> 
       select(player_id, player_name, team_logo_espn, gp, goals, ixg, gax, team,
              team_color1, team_color2) 
