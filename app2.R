@@ -39,7 +39,7 @@ server = function(input, output) {
     goe() |>
       na.omit() |>
       ggplot(aes(x = ixg, y = gax)) +
-      geom_point(aes(fill = team_color1, color = team_color2, size = gp),
+      geom_point(aes(fill = team_color1, color = team_color2, size = goals),
                  shape = 21, alpha = 0.9) +
       scale_color_identity(aesthetics = c("fill", "color")) +
       ggrepel::geom_text_repel(aes(label = player_name)) +
@@ -49,7 +49,7 @@ server = function(input, output) {
       labs(x = "Expected Goals",
            y = "Goals Over Expected Goals",
            title = "Goals Over Expected and Expected Goals",
-           subtitle = "Minimum 30 goals") +
+           subtitle = "Minimum 30 goal per season average") +
       scale_x_continuous(breaks = scales::pretty_breaks(n = 5)) +
       scale_y_continuous(breaks = scales::pretty_breaks(n = 5)) +
       theme(plot.title = element_text(size = 22, hjust = 0.5, face = "bold"),
