@@ -16,7 +16,7 @@ goals_over_expected = calculate_individual(pbph, type = "R", game_strength = "al
 goals_over_expected |> 
   na.omit() |> 
   ggplot(aes(x = ixg, y = gax)) +
-  geom_point(aes(fill = team_color1, color = team_color2, size = gp), 
+  geom_point(aes(fill = team_color1, color = team_color2, size = goals), 
              shape = 21, alpha = 0.9) +
   scale_color_identity(aesthetics = c("fill", "color")) +
   ggrepel::geom_text_repel(aes(label = player_name)) +
@@ -71,7 +71,7 @@ goals_over_expected_pg = calculate_individual(pbph, type = "R", game_strength = 
 goals_over_expected_pg |> 
   na.omit() |> 
   ggplot(aes(x = xg_pg, y = gax_pg)) +
-  geom_point(aes(fill = team_color1, color = team_color2, size = gp), 
+  geom_point(aes(fill = team_color1, color = team_color2, size = goals), 
              shape = 21, alpha = 0.9) +
   scale_color_identity(aesthetics = c("fill", "color")) +
   ggrepel::geom_text_repel(aes(label = player_name)) +
@@ -124,7 +124,7 @@ goals_over_expected = calculate_individual(pbph_2, type = "R", game_strength = "
 goals_over_expected |> 
   na.omit() |> 
   ggplot(aes(x = ixg, y = gax)) +
-  geom_point(aes(fill = team_color1, color = team_color2, size = gp), 
+  geom_point(aes(fill = team_color1, color = team_color2, size = goals), 
              shape = 21, alpha = 0.9) +
   scale_color_identity(aesthetics = c("fill", "color")) +
   ggrepel::geom_text_repel(aes(label = player_name)) +
@@ -189,7 +189,7 @@ goals_over_expected_pg = calculate_individual(pbph_2, type = "R", game_strength 
 goals_over_expected_pg |> 
   na.omit() |> 
   ggplot(aes(x = xg_pg, y = gax_pg)) +
-  geom_point(aes(fill = team_color1, color = team_color2, size = gp), 
+  geom_point(aes(fill = team_color1, color = team_color2, size = goals), 
              shape = 21, alpha = 0.9) +
   scale_color_identity(aesthetics = c("fill", "color")) +
   ggrepel::geom_text_repel(aes(label = player_name)) +
