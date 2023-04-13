@@ -33,7 +33,7 @@ ui = fluidPage(
 
 server = function(input, output) {
   
-  pbp_filtered = reactive({
+  pbpFiltered = reactive({
     pbpFull |> 
       filter(season >= input$dateRange[1] & season <= input$dateRange[2])
     
@@ -41,7 +41,7 @@ server = function(input, output) {
   
   goe = reactive({
     
-    calculate_individual(pbp_filtered(), type = "R", game_strength = "all") |> 
+    calculate_individual(pbpFiltered(), type = "R", game_strength = "all") |> 
       group_by(player_id) |> 
       filter(goals >= (input$dateRange[2] - input$dateRange[1]) * 30) |> 
       left_join(team_logos_colors, by = c("team" = "full_team_name")) |> 
