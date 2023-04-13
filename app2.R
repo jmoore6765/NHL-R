@@ -5,29 +5,37 @@ library(gt)
 library(gtExtras)
 library(ggplot2)
 
-pbp_full = hockeyR::load_pbp(2022:2023)
+pbpFull = hockeyR::load_pbp(2022:2023)
 
 ui = fluidPage(
   
   titlePanel("Goals Over Expected"),
   
   mainPanel(
-    tabPanel("Tab 1",
-             sliderInput(inputId = "date_range", label = "Date Range", min = 2022, max = 2023, value = c(2022, 2023), step = 1, sep = "")
-             ),
-    mainPanel(
-      plotOutput(outputId = "scatter_plot",
-                 width = "750px", height = "500px"),
-      gt_output(outputId = "table")
-      ),
+    navbarPage(" ", 
+               tabPanel("Tab 1",
+                        sliderInput(inputId = "dateRange", label = "Date Range", min = 2022, max = 2023, value = c(2022, 2023), step = 1, sep = ""),
+                        mainPanel(
+                          plotOutput(outputId = "scatterPlotGOE", 
+                                     width = "1000px", 
+                                     height = "500px"),
+                          gt_output(outputId = "gtTableGOE")
+                          ),
+                        ),
+               tabPanel("Tab 2",
+                        sliderInput(inputId = "dateRange", label = "Date Range", min = 2022, max = 2023, value = c(2022, 2023), step = 1, sep = ""),
+                        mainPanel(
+                          ),
+                        )
+               )
     )
-  )
+)
 
 server = function(input, output) {
   
   pbp_filtered = reactive({
-    pbp_full |> 
-      filter(season >= input$date_range[1] & season <= input$date_range[2])
+    pbpFull |> 
+      filter(season >= input$dateRange[1] & season <= input$dateRange[2])
     
     })
   
@@ -35,13 +43,13 @@ server = function(input, output) {
     
     calculate_individual(pbp_filtered(), type = "R", game_strength = "all") |> 
       group_by(player_id) |> 
-      filter(goals >= (input$date_range[2] - input$date_range[1]) * 30) |> 
+      filter(goals >= (input$dateRange[2] - input$dateRange[1]) * 30) |> 
       left_join(team_logos_colors, by = c("team" = "full_team_name")) |> 
       select(player_id, player_name, team_logo_espn, gp, goals, ixg, gax, team, team_color1, team_color2) 
     
     })
   
-  output$scatter_plot = renderPlot({
+  output$scatterPlotGOE = renderPlot({
     
     goe() |>
       na.omit() |>
@@ -63,7 +71,7 @@ server = function(input, output) {
     
     })
   
-  output$table = render_gt({
+  output$gtTableGOE = render_gt({
     
     goe() |>
       cbind(gax_rank = rank(-goe()$gax)) |>
