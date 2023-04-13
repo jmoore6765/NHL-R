@@ -5,21 +5,28 @@ library(gt)
 library(gtExtras)
 library(ggplot2)
 
-pbp_full = hockeyR::load_pbp(2015:2023)
+pbp_full = hockeyR::load_pbp(2022:2023)
 
 # Define UI
 ui = fluidPage(
-  sliderInput(inputId = "date_range", 
-              label = "Date Range",
-              min = 2015, max = 2023, value = c(2021, 2022), step = 1, sep = ""),
-  plotOutput(outputId = "scatter_plot"),
-  gt_output(outputId = "table")
-)
+  
+  titlePanel("Goals Over Expected"),
+  
+  mainPanel(
+    tabPanel("Tab 1",
+             sliderInput(inputId = "date_range", label = "Date Range", min = 2022, max = 2023, value = c(2022, 2023), step = 1, sep = "")
+             ),
+    mainPanel(
+      plotOutput(outputId = "scatter_plot",
+                 width = "750px", height = "500px"),
+      gt_output(outputId = "table")
+      ),
+    )
+  )
 
 # Define server
 server = function(input, output) {
-  
-  # Filter data based on date range selected by user
+
   pbp_filtered = reactive({
     pbp_full |> 
       filter(season >= input$date_range[1] & season <= input$date_range[2])
@@ -64,6 +71,7 @@ server = function(input, output) {
       mutate(ixg = round(ixg, 1),
              gax = round(gax, 1)) |>
       gt() |>
+      style(css = "table { width: 100%; }") |> 
       tab_row_group(label = "", rows = 1:nrow(goe())) |>
       cols_align(align = "center") |>
       gt_img_rows(team_logo_espn) |> 
