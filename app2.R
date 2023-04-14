@@ -13,16 +13,16 @@ ui = fluidPage(
   
   mainPanel(
     navbarPage(" ", 
-               tabPanel("Tab 1",
+               tabPanel("By Season",
                         sliderInput(inputId = "dateRange", label = "Date Range", min = 2022, max = 2023, value = c(2022, 2023), step = 1, sep = ""),
                         mainPanel(
                           plotOutput(outputId = "scatterPlotGOE", 
-                                     width = "1000px", 
+                                     width = "800px", 
                                      height = "500px"),
                           gt_output(outputId = "gtTableGOE")
                           ),
                         ),
-               tabPanel("Tab 2",
+               tabPanel("By Games Played",
                         sliderInput(inputId = "dateRange", label = "Date Range", min = 2022, max = 2023, value = c(2022, 2023), step = 1, sep = ""),
                         mainPanel(
                           ),
