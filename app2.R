@@ -16,15 +16,19 @@ ui = fluidPage(
                tabPanel("By Season",
                         sliderInput(inputId = "dateRange", label = "Date Range", min = 2022, max = 2023, value = c(2022, 2023), step = 1, sep = ""),
                         mainPanel(
-                          plotOutput(outputId = "scatterPlotGOE", 
+                          plotOutput(outputId = "plotExpectedGoals", 
                                      width = "800px", 
                                      height = "500px"),
-                          gt_output(outputId = "gtTableGOE")
+                          gt_output(outputId = "gtExpectedGoals")
                           ),
                         ),
                tabPanel("By Games Played",
                         sliderInput(inputId = "dateRange", label = "Date Range", min = 2022, max = 2023, value = c(2022, 2023), step = 1, sep = ""),
                         mainPanel(
+                          plotOutput(outputId = "plotExpectedPerGame", 
+                                     width = "800px", 
+                                     height = "500px"),
+                          gt_output(outputId = "gtExpectedPerGame")
                           ),
                         )
                )
@@ -49,7 +53,7 @@ server = function(input, output) {
     
     })
   
-  output$scatterPlotGOE = renderPlot({
+  output$plotExpectedGoals = renderPlot({
     
     goe() |>
       na.omit() |>
@@ -71,7 +75,7 @@ server = function(input, output) {
     
     })
   
-  output$gtTableGOE = render_gt({
+  output$gtExpectedGoals = render_gt({
     
     goe() |>
       cbind(gax_rank = rank(-goe()$gax)) |>
