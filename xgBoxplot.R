@@ -1,15 +1,15 @@
-library(hockeyR)
-library(tidyverse)
+# library(hockeyR)
+# library(tidyverse)
 library(gt)
 library(gtExtras)
 library(ggbeeswarm)
 
-library(ggthemes)
+# library(ggthemes)
 library(ggimage)
 library(shiny)
 library(shinythemes)
 library(ggrepel)
-library(ggbeeswarm)
+# library(ggbeeswarm)
 
 pbp22 = hockeyR::load_pbp(2022)
 
@@ -19,8 +19,6 @@ topPlayers = pbp22 |>
   summarise(totalXG = sum(xg)) |> 
   arrange(desc(totalXG)) |> 
   head(3)
-
-
 
 
 theme_reach <- function() {
@@ -45,7 +43,7 @@ test = pbp22 |>
   filter(!is.na(xg), event_player_1_name == "Auston.Matthews")
 
 test |> 
-  ggplot(aes(x = event_player_1_name, y = xg)) +
+  ggplot(aes(x = event_player_1_name, y = xg, fill = xg)) +
   geom_quasirandom(pch = 21, size = 5) +
   scale_fill_viridis_c() +
   theme_reach()
