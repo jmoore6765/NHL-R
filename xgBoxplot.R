@@ -46,6 +46,3 @@ pbp22 |>
   geom_hline(yintercept = 0, color = "black", alpha=1.0) +
   scale_y_continuous(breaks = scales::pretty_breaks(n = 6)) +
   labs(x = "Player Name", y = "XG", title = "Goal Probability of Top Three Toronto Player Shots")
-  
-  
-  
