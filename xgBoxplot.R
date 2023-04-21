@@ -6,20 +6,8 @@ library(ggbeeswarm)
 
 # library(ggthemes)
 library(ggimage)
-library(shiny)
-library(shinythemes)
 library(ggrepel)
 # library(ggbeeswarm)
-
-pbp22 = hockeyR::load_pbp(2022)
-
-topPlayers = pbp22 |> 
-  filter(!is.na(xg), event_team_abbr == "TOR") |> 
-  group_by(event_player_1_name) |> 
-  summarise(totalXG = sum(xg)) |> 
-  arrange(desc(totalXG)) |> 
-  head(3)
-
 
 theme_reach <- function() {
   theme_fivethirtyeight() +
@@ -36,15 +24,28 @@ theme_reach <- function() {
     )
 }
 
+pbp22 = hockeyR::load_pbp(2022)
 
-pOne = topPlayers[1,1]
+topPlayers = pbp22 |> 
+  filter(!is.na(xg), event_team_abbr == "TOR") |> 
+  group_by(event_player_1_name) |> 
+  summarise(totalXG = sum(xg)) |> 
+  arrange(desc(totalXG)) |> 
+  head(3)
 
-test = pbp22 |> 
-  filter(!is.na(xg), event_player_1_name == "Auston.Matthews")
+topPlayerNames = topPlayers$event_player_1_name
 
-test |> 
+pbp22 |> 
+  filter(xg >= 0.01) |> 
+  filter(xg <= 0.5) |> 
+  filter(!is.na(xg), event_player_1_name %in% topPlayerNames) |> 
   ggplot(aes(x = event_player_1_name, y = xg, fill = xg)) +
-  geom_quasirandom(pch = 21, size = 5) +
+  geom_quasirandom(pch = 21, size = 4) +
   scale_fill_viridis_c() +
-  theme_reach()
+  theme_reach() +
+  geom_hline(yintercept = 0, color = "black", alpha=1.0) +
+  scale_y_continuous(breaks = scales::pretty_breaks(n = 6)) +
+  labs(x = "Player Name", y = "XG", title = "Goal Probability of Top Three Toronto Player Shots")
+  
+  
   
